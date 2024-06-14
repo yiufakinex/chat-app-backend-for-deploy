@@ -31,7 +31,6 @@ public class UserService {
     private UserRepository userRepository;
 
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-
     private final CustomValidator<User> customValidator = new CustomValidator<>();
 
     public User currentUser(CustomOAuth2User oAuth2User) {
@@ -48,11 +47,8 @@ public class UserService {
         if (!violations.isEmpty()) {
             throw new InvalidUsernameException(new ConstraintViolationException(violations).getMessage(), username);
         }
-        // Make sure the OAuth2User has updated authorities, as it's not refreshed until
-        // user re-logins.
         CustomOAuth2User customOAuth2User = (CustomOAuth2User) oAuth2User;
         customOAuth2User.refreshAuthority();
-        // Update for the Security Config.
         Authentication newAuth = new OAuth2AuthenticationToken(customOAuth2User, customOAuth2User.getAuthorities(),
                 customOAuth2User.getName());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
@@ -60,19 +56,12 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
-        Optional<User> optional = userRepository.findByUsername(username);
-        if (optional.isEmpty()) {
-            return null;
-        }
-        return optional.get();
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     public User findUserJoinedWithGroupChat(String username) {
-        Optional<User> optional = userRepository.findUserJoinedWithGroupChat(username);
-        if (optional.isEmpty()) {
-            throw new InvalidInputException(username + " is invalid.");
-        }
-        return optional.get();
+        return userRepository.findUserJoinedWithGroupChat(username)
+                .orElseThrow(() -> new InvalidInputException(username + " is invalid."));
     }
 
     public User updateDisplayName(User user, String displayName) {
@@ -85,5 +74,4 @@ public class UserService {
         CustomOAuth2User oAuth2User = (CustomOAuth2User) ((OAuth2AuthenticationToken) principal).getPrincipal();
         return oAuth2User.getUser();
     }
-
 }

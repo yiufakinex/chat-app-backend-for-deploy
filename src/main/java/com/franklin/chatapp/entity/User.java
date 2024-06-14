@@ -34,7 +34,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "user")
+@Table(name = "\"user\"")
 public class User {
 
     public enum AuthenticationProvider {
@@ -85,24 +85,21 @@ public class User {
     @Column(name = "created_at")
     private Long createdAt;
 
-    @Column(name = "group_chats")
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     @OrderBy("last_message_at DESC")
     @JsonIgnore
     private final Set<GroupChat> groupChats = new HashSet<>();
 
-    @Column(name = "messages")
     @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "sender")
     @JsonIgnore
     private final Set<Message> messages = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
+        if (this == o)
             return true;
-        } else if (!(o instanceof User)) {
+        if (!(o instanceof User))
             return false;
-        }
         User other = (User) o;
         return this.id.equals(other.id);
     }
@@ -111,5 +108,4 @@ public class User {
     public int hashCode() {
         return id.hashCode();
     }
-
 }

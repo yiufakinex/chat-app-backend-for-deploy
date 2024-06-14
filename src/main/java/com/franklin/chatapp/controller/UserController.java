@@ -40,5 +40,4 @@ public class UserController {
         return new ResponseEntity<>(Response.createBody("user", userService.updateDisplayName(user, displayName)),
                 HttpStatus.OK);
     }
-
 }
