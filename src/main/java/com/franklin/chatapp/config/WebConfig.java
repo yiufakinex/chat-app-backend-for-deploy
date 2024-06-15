@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/built/**")
+        registry.addResourceHandler("/dist/**")
                 .addResourceLocations("https://chat-app-frontend-for-deploy-leep.onrender.com/")
                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS)
                         .cachePublic()

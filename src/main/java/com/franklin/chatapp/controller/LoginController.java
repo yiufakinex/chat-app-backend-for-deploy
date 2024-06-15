@@ -27,8 +27,6 @@ import com.franklin.chatapp.util.Response;
 @RequestMapping("/api/login")
 public class LoginController {
 
-    private static final String FRONTEND_URL = "https://chat-app-frontend-for-deploy-leep.onrender.com";
-
     @Autowired
     private UserService userService;
 
@@ -50,7 +48,6 @@ public class LoginController {
     public ResponseEntity<Void> newUser(@GetUser User user, @RequestParam("username") String username,
             @AuthenticationPrincipal OAuth2User oAuth2User) {
         userService.newUser(user, username, oAuth2User);
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(FRONTEND_URL + "/")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/")).build();
     }
-
 }
