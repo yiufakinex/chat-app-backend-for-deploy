@@ -17,7 +17,8 @@ public class CustomOAuth2AuthenticationFailureHandler extends SimpleUrlAuthentic
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException e) throws IOException, ServletException {
-        String targetUrl = UriComponentsBuilder.fromPath("/login")
+        String targetUrl = UriComponentsBuilder
+                .fromUriString("https://chat-app-frontend-for-deploy-leep.onrender.com/login")
                 .queryParam("error", e.getMessage().replace("[", "").replace("]", ""))
                 .build().toUriString();
         getRedirectStrategy().sendRedirect(request, response, targetUrl);

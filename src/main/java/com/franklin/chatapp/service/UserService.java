@@ -1,7 +1,6 @@
 package com.franklin.chatapp.service;
 
 import java.security.Principal;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;

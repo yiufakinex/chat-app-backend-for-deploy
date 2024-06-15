@@ -11,19 +11,19 @@ public class FrontendController {
 
     @GetMapping(path = "/")
     public String index() {
-        return "forward:/built/index.html";
+        return "redirect:https://chat-app-frontend-for-deploy-leep.onrender.com";
     }
 
     @GetMapping(path = "/login")
     public String login(@GetUser User user) {
         if (user == null) {
-            return "/login";
+            return "redirect:https://chat-app-frontend-for-deploy-leep.onrender.com/login";
         }
-        return "redirect:/";
+        return "redirect:https://chat-app-frontend-for-deploy-leep.onrender.com";
     }
 
     @GetMapping(path = "/new_user")
     public String newUser() {
-        return "newUser";
+        return "redirect:https://chat-app-frontend-for-deploy-leep.onrender.com/new_user";
     }
 }
