@@ -1,13 +1,11 @@
 package com.franklin.chatapp.config;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.CacheControl;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.franklin.chatapp.annotation.GetUserArgumentResolver;
@@ -22,13 +20,11 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/dist/**")
-                .addResourceLocations("https://chat-app-frontend-for-deploy-leep.onrender.com/")
-                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS)
-                        .cachePublic()
-                        .immutable()
-                        .sMaxAge(365, TimeUnit.DAYS));
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("https://chat-app-frontend-for-deploy-leep.onrender.com")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
-
 }
